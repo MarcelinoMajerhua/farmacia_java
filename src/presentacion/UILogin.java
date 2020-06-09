@@ -6,6 +6,7 @@
 package presentacion;
 
 import com.sun.awt.AWTUtilities;
+import control.Ventana;
 import dataAccesObject.DaoLogin;
 import javax.swing.JOptionPane;
 
@@ -20,8 +21,14 @@ public class UILogin extends javax.swing.JFrame {
     public void validar(){
         if(metodosLogin.validarIngreso()==1){
             this.dispose();
-            JOptionPane.showMessageDialog(null, "bienvenido");
+            //poner para un mensaje personalizado 
             //poner la ventana principal 
+            presentacion.UIPrincipal i;
+            i = new presentacion.UIPrincipal();
+            AWTUtilities.setWindowOpaque(i, false);
+            i.setVisible(true);
+            Ventana v = new Ventana();
+            v.cambiarEstado();
         }else{
             JOptionPane.showMessageDialog(null, "No está logueado");
             
@@ -55,6 +62,16 @@ public class UILogin extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtUsuario.setForeground(new java.awt.Color(153, 153, 153));
@@ -82,8 +99,8 @@ public class UILogin extends javax.swing.JFrame {
         jLabel2.setText("Usuario:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/icons8_User_96px_2.png"))); // NOI18N
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/logo.png"))); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 240, 10));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 240, 10));
 
@@ -136,6 +153,18 @@ public class UILogin extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+    int xx,yy;
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        xx=evt.getX();
+        yy=evt.getY();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        int x= evt.getXOnScreen();
+        int y= evt.getYOnScreen();
+        
+        this.setLocation(x-xx, y-yy);
+    }//GEN-LAST:event_jPanel1MouseDragged
 
     /**
      * @param args the command line arguments
