@@ -6,29 +6,26 @@
 package presentacion;
 
 import com.sun.awt.AWTUtilities;
-import control.Ventana;
 import dataAccesObject.DaoLogin;
 import javax.swing.JOptionPane;
 
 public class UILogin extends javax.swing.JFrame {
-   
     public UILogin() {
         initComponents();
         setLocationRelativeTo(null);
         this.setTitle("Login");
     }
     DaoLogin metodosLogin = new DaoLogin();
+    
     public void validar(){
-        if(metodosLogin.validarIngreso()==1){
+        if(metodosLogin.validarIngreso().getLogueado()&metodosLogin.validarIngreso().getActivo()){
             this.dispose();
             //poner para un mensaje personalizado 
             //poner la ventana principal 
             presentacion.UIPrincipal i;
-            i = new presentacion.UIPrincipal();
-            AWTUtilities.setWindowOpaque(i, false);
+            i = new presentacion.UIPrincipal(metodosLogin.validarIngreso());//pasando datos a la interface UIPrincipal
+            //AWTUtilities.setWindowOpaque(i, false);
             i.setVisible(true);
-            Ventana v = new Ventana();
-            v.cambiarEstado();
         }else{
             JOptionPane.showMessageDialog(null, "No está logueado");
             

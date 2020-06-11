@@ -101,7 +101,6 @@ public class DAOUsuarioImpl extends Conexion implements DAOUsuario{
         }
         return lista;
     }
-
     @Override
     public List<Usuario> mostrarUno(Usuario usu) throws Exception {
          List<Usuario> lista;

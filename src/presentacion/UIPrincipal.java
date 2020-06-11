@@ -1,234 +1,342 @@
 
 package presentacion;
-import AppPackage.AnimationClass;
+
+import control.CambiaPanel;
+import datos.Usuario;
+
 
 public class UIPrincipal extends javax.swing.JFrame {
-    
-    public void cerrarUIPrincipal(){
-        this.dispose();
-    }
+    private String nombreUsuario="No nombre";
+    private int idUsuario=0;
+    private boolean categoria=false;
+    int xx,yy;
+    private String tituloTabla="Mary Pharmacy";
     public UIPrincipal() {
-        initComponents(); 
-        this.setLocationRelativeTo(null); //para que aparesca en el centro 
+        initComponents();
+        this.setLocationRelativeTo(null);
+        cambiarTitulo("Mary Pharmacy");
+        this.setTitle(getTitulo());
+        new CambiaPanel(jpPrincipal,new UIInicio());
+    }
+    public UIPrincipal(Usuario us){
+        this.nombreUsuario=us.getNombre();
+        this.idUsuario=us.getId_modificar();
+        this.categoria=us.getCategoria();
+        initComponents();
+        this.setLocationRelativeTo(null);
+        cambiarTitulo("Mary Pharmacy");
+        this.setTitle(getTitulo());
+        new CambiaPanel(jpPrincipal,new UIInicio());
+        if(!us.getCategoria()){//seleccionar que ventanas se va mostrar
+            ocultarBoton();
+        }
     }
     
-    public UIPrincipal(boolean stV) {
-        initComponents(); 
-
+    
+    private String cambiarTitulo(String nuevo_titulo){
+        this.tituloTabla=nuevo_titulo;
+        return tituloTabla;
+    }
+    private String getTitulo(){
+        return tituloTabla;
+    }
+    private void ocultarBoton(){    
+        this.jbPersonal.setVisible(false);
+        this.jbReporte.setVisible(false);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jpMenu = new javax.swing.JPanel();
-        btnMinimizar = new javax.swing.JButton();
-        btnCerrar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jbInicio = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jbVenta = new javax.swing.JButton();
+        jbProducto = new javax.swing.JButton();
+        jSeparator5 = new javax.swing.JSeparator();
+        jbReporte = new javax.swing.JButton();
+        jSeparator6 = new javax.swing.JSeparator();
+        jbPersonal = new javax.swing.JButton();
+        jSeparator7 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jlInternet = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        jpToolBar = new javax.swing.JPanel();
+        jpPrincipal = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
-        setResizable(false);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jpMenu.setBackground(new java.awt.Color(255, 255, 255));
-        jpMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jpMenu.setForeground(new java.awt.Color(255, 255, 255));
-        jpMenu.setPreferredSize(new java.awt.Dimension(1050, 575));
-        jpMenu.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        setBackground(new java.awt.Color(102, 255, 102));
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jpMenuMouseDragged(evt);
+                formMouseDragged(evt);
             }
         });
-        jpMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+        addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jpMenuMousePressed(evt);
+                formMousePressed(evt);
             }
         });
-        jpMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/icons8_Expand_Arrow_32px.png"))); // NOI18N
-        btnMinimizar.setBorder(null);
-        btnMinimizar.setBorderPainted(false);
-        btnMinimizar.setContentAreaFilled(false);
-        btnMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMinimizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMinimizarActionPerformed(evt);
-            }
-        });
-        jpMenu.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 10, 40, 30));
+        jpMenu.setBackground(new java.awt.Color(78, 115, 223));
+        jpMenu.setPreferredSize(new java.awt.Dimension(100, 700));
 
-        btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/icons8_Multiply_32px.png"))); // NOI18N
-        btnCerrar.setBorder(null);
-        btnCerrar.setBorderPainted(false);
-        btnCerrar.setContentAreaFilled(false);
-        btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jbInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_inicio_off.png"))); // NOI18N
+        jbInicio.setBorder(null);
+        jbInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbInicio.setPreferredSize(new java.awt.Dimension(130, 40));
+        jbInicio.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_inicio_on.png"))); // NOI18N
+        jbInicio.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_inicio_on.png"))); // NOI18N
+        jbInicio.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_inicio_on.png"))); // NOI18N
+        jbInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCerrarMouseClicked(evt);
+                jbInicioMouseClicked(evt);
             }
         });
-        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarActionPerformed(evt);
-            }
-        });
-        jpMenu.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 10, 40, 30));
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/medicine.png"))); // NOI18N
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jpMenu.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 60, 210, 190));
-
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/logistics.png"))); // NOI18N
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jpMenu.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 310, 210, 190));
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/buy.png"))); // NOI18N
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+        jbVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_venta_off.png"))); // NOI18N
+        jbVenta.setBorder(null);
+        jbVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbVenta.setPreferredSize(new java.awt.Dimension(130, 40));
+        jbVenta.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_venta_on.png"))); // NOI18N
+        jbVenta.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_venta_on.png"))); // NOI18N
+        jbVenta.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_venta_on.png"))); // NOI18N
+        jbVenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
+                jbVentaMouseClicked(evt);
             }
         });
-        jpMenu.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 210, 190));
 
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/Home.png"))); // NOI18N
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jpMenu.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 210, 190));
-
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/statistics.png"))); // NOI18N
-        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jpMenu.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 210, 190));
-
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/money.png"))); // NOI18N
-        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jpMenu.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, 210, 190));
-
-        jLabel1.setBackground(new java.awt.Color(255, 99, 71));
-        jLabel1.setFont(new java.awt.Font("Yu Gothic", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 99, 71));
-        jLabel1.setText("Proveedor");
-        jpMenu.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 450, -1, -1));
-
-        jTextField1.setFont(new java.awt.Font("Yu Gothic", 1, 24)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(187, 187, 187));
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 99, 71)));
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jpMenu.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 210, 30));
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/icons8_Search_32px_2.png"))); // NOI18N
-        jpMenu.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 40, 30));
-
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/icons8_Menu_32px.png"))); // NOI18N
-        jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+        jbProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_producto_off.png"))); // NOI18N
+        jbProducto.setBorder(null);
+        jbProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbProducto.setPreferredSize(new java.awt.Dimension(130, 40));
+        jbProducto.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_producto_on.png"))); // NOI18N
+        jbProducto.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_producto_on.png"))); // NOI18N
+        jbProducto.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_producto_on.png"))); // NOI18N
+        jbProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel9MouseClicked(evt);
+                jbProductoMouseClicked(evt);
             }
         });
-        jpMenu.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        jlInternet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlInternet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/icons8_Globe_32px.png"))); // NOI18N
-        jpMenu.add(jlInternet, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 100, -1, -1));
+        jbReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_reporte_off.png"))); // NOI18N
+        jbReporte.setBorder(null);
+        jbReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbReporte.setPreferredSize(new java.awt.Dimension(130, 40));
+        jbReporte.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_reporte_on.png"))); // NOI18N
+        jbReporte.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_reporte_on.png"))); // NOI18N
+        jbReporte.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_reporte_on.png"))); // NOI18N
+        jbReporte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbReporteMouseClicked(evt);
+            }
+        });
 
-        jLabel10.setBackground(new java.awt.Color(255, 99, 71));
-        jLabel10.setFont(new java.awt.Font("Yu Gothic", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 99, 71));
-        jLabel10.setText("Inicio");
-        jpMenu.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, -1, -1));
+        jbPersonal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_personal_off.png"))); // NOI18N
+        jbPersonal.setBorder(null);
+        jbPersonal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbPersonal.setPreferredSize(new java.awt.Dimension(130, 40));
+        jbPersonal.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_personal_on.png"))); // NOI18N
+        jbPersonal.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_personal_on.png"))); // NOI18N
+        jbPersonal.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/button_personal_on.png"))); // NOI18N
+        jbPersonal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbPersonalMouseClicked(evt);
+            }
+        });
 
-        jLabel11.setBackground(new java.awt.Color(255, 99, 71));
-        jLabel11.setFont(new java.awt.Font("Yu Gothic", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 99, 71));
-        jLabel11.setText("Venta");
-        jpMenu.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, -1, -1));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/logoFarmacia.png"))); // NOI18N
 
-        jLabel12.setBackground(new java.awt.Color(255, 99, 71));
-        jLabel12.setFont(new java.awt.Font("Yu Gothic", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 99, 71));
-        jLabel12.setText("Producto");
-        jpMenu.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 210, -1, -1));
+        javax.swing.GroupLayout jpMenuLayout = new javax.swing.GroupLayout(jpMenu);
+        jpMenu.setLayout(jpMenuLayout);
+        jpMenuLayout.setHorizontalGroup(
+            jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpMenuLayout.createSequentialGroup()
+                .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpMenuLayout.createSequentialGroup()
+                        .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jbInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator3))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMenuLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jbVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jbProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jbReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jbPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
+            .addGroup(jpMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jpMenuLayout.setVerticalGroup(
+            jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpMenuLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(jbInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(256, Short.MAX_VALUE))
+        );
 
-        jLabel13.setBackground(new java.awt.Color(255, 99, 71));
-        jLabel13.setFont(new java.awt.Font("Yu Gothic", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 99, 71));
-        jLabel13.setText("Reporte");
-        jpMenu.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 460, -1, -1));
+        jpToolBar.setBackground(new java.awt.Color(255, 255, 255));
+        jpToolBar.setForeground(new java.awt.Color(255, 255, 255));
+        jpToolBar.setPreferredSize(new java.awt.Dimension(1200, 30));
+        jpToolBar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jpToolBarMouseDragged(evt);
+            }
+        });
+        jpToolBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jpToolBarMousePressed(evt);
+            }
+        });
 
-        jLabel14.setBackground(new java.awt.Color(255, 99, 71));
-        jLabel14.setFont(new java.awt.Font("Yu Gothic", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 99, 71));
-        jLabel14.setText("Personal");
-        jpMenu.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 460, -1, -1));
+        javax.swing.GroupLayout jpToolBarLayout = new javax.swing.GroupLayout(jpToolBar);
+        jpToolBar.setLayout(jpToolBarLayout);
+        jpToolBarLayout.setHorizontalGroup(
+            jpToolBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1173, Short.MAX_VALUE)
+        );
+        jpToolBarLayout.setVerticalGroup(
+            jpToolBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
-        getContentPane().add(jpMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jpPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+        jpPrincipal.setForeground(new java.awt.Color(255, 255, 255));
+        jpPrincipal.setMinimumSize(new java.awt.Dimension(100, 100));
+        jpPrincipal.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jpPrincipalMouseDragged(evt);
+            }
+        });
+        jpPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jpPrincipalMousePressed(evt);
+            }
+        });
+        jpPrincipal.setLayout(new javax.swing.BoxLayout(jpPrincipal, javax.swing.BoxLayout.LINE_AXIS));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jpMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 1173, Short.MAX_VALUE)
+                    .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jpToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jpMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                    .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-      
-    }//GEN-LAST:event_btnCerrarActionPerformed
+    private void jbVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbVentaMouseClicked
+        Usuario u = new Usuario();
+        u.setNombre(nombreUsuario);
+        u.setCategoria(categoria);
+        u.setId_modificar(idUsuario);
+        cambiarTitulo("Venta "+this.nombreUsuario);
+        this.setTitle(getTitulo());
+        new CambiaPanel(jpPrincipal, new UIVenta(u));
 
-    private void btnMinimizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinimizarActionPerformed
-        this.setExtendedState(ICONIFIED);
-    }//GEN-LAST:event_btnMinimizarActionPerformed
+    }//GEN-LAST:event_jbVentaMouseClicked
 
-    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-        
-        AnimationClass internet = new AnimationClass();
-        internet.jLabelXRight(-40, 30, 10, 5, jlInternet);
-        //para que vuelva  su posicion original 
-        
-        AnimationClass internett = new AnimationClass();
-        internett.jLabelXRight(30, -40, 10, 5, jlInternet);
-        
-    }//GEN-LAST:event_jLabel9MouseClicked
-
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-
-        
-    }//GEN-LAST:event_jLabel5MouseClicked
-    int xx,yy;
-    private void jpMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpMenuMousePressed
+    private void jpPrincipalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpPrincipalMousePressed
         xx=evt.getX();
         yy=evt.getY();
-    }//GEN-LAST:event_jpMenuMousePressed
+    }//GEN-LAST:event_jpPrincipalMousePressed
 
-    private void jpMenuMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpMenuMouseDragged
+    private void jpPrincipalMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpPrincipalMouseDragged
+        
+    }//GEN-LAST:event_jpPrincipalMouseDragged
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formMousePressed
+
+    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
+        
+// TODO add your handling code here:
+    }//GEN-LAST:event_formMouseDragged
+
+    private void jpToolBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpToolBarMousePressed
+        xx=evt.getX();
+        yy=evt.getY();
+    }//GEN-LAST:event_jpToolBarMousePressed
+
+    private void jpToolBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpToolBarMouseDragged
         int x= evt.getXOnScreen();
         int y= evt.getYOnScreen();
-        
-        this.setLocation(x-xx, y-yy);
-    }//GEN-LAST:event_jpMenuMouseDragged
 
-    private void btnCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseClicked
-        
-    }//GEN-LAST:event_btnCerrarMouseClicked
-    
+        this.setLocation(x-xx, y-yy);
+    }//GEN-LAST:event_jpToolBarMouseDragged
+
+    private void jbProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbProductoMouseClicked
+        cambiarTitulo("Producto "+this.nombreUsuario);
+        this.setTitle(getTitulo());
+        new CambiaPanel(jpPrincipal, new UIProducto());
+    }//GEN-LAST:event_jbProductoMouseClicked
+
+    private void jbReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbReporteMouseClicked
+        cambiarTitulo("Reporte "+this.nombreUsuario);
+        this.setTitle(getTitulo());
+        new CambiaPanel(jpPrincipal, new UIReporte());
+    }//GEN-LAST:event_jbReporteMouseClicked
+
+    private void jbPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbPersonalMouseClicked
+        cambiarTitulo("Personal "+this.nombreUsuario);
+        this.setTitle(getTitulo());
+        new CambiaPanel(jpPrincipal, new UIPersonal());
+    }//GEN-LAST:event_jbPersonalMouseClicked
+
+    private void jbInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbInicioMouseClicked
+         cambiarTitulo("Inicio "+this.nombreUsuario);
+        this.setTitle(getTitulo());
+        new CambiaPanel(jpPrincipal, new UIInicio());
+    }//GEN-LAST:event_jbInicioMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -255,6 +363,7 @@ public class UIPrincipal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(UIPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -265,24 +374,19 @@ public class UIPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCerrar;
-    private javax.swing.JButton btnMinimizar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel jlInternet;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JButton jbInicio;
+    private javax.swing.JButton jbPersonal;
+    private javax.swing.JButton jbProducto;
+    private javax.swing.JButton jbReporte;
+    private javax.swing.JButton jbVenta;
     private javax.swing.JPanel jpMenu;
+    private javax.swing.JPanel jpPrincipal;
+    private javax.swing.JPanel jpToolBar;
     // End of variables declaration//GEN-END:variables
 }

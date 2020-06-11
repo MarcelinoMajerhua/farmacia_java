@@ -11,4 +11,5 @@ public interface DAOProducto {
    public void eliminar(Producto pr)throws Exception;
    public List <Producto> listar()throws Exception;
    public List <Producto> listarUno(Producto pr) throws Exception;
+   public List <Producto> buscarProducto(String pr) throws Exception;
 }

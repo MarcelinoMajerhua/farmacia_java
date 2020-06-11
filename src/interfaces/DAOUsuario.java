@@ -10,4 +10,5 @@ public interface DAOUsuario {
     public void eliminar(Usuario usu)throws Exception;
     public List <Usuario> listar() throws Exception;
     public List <Usuario> mostrarUno(Usuario usu) throws Exception;
+
 }

@@ -11,7 +11,15 @@ public class Usuario {
     private boolean categoria;
     private boolean activo;
     private int id_modificar;
+    private boolean logueado;
 
+    public boolean getLogueado() {
+        return logueado;
+    }
+
+    public void setLogueado(boolean logueado) {
+        this.logueado = logueado;
+    }
     
     
     public Usuario(){};

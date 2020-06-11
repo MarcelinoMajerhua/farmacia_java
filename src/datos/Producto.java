@@ -13,6 +13,15 @@ public class Producto {
     private int id_proveedor;
     private float precio;
     private int codigo;
+    private String tipo_producto;
+
+    public String getTipo_producto() {
+        return tipo_producto;
+    }
+
+    public void setTipo_producto(String tipo_producto) {
+        this.tipo_producto = tipo_producto;
+    }
     
     public Producto(){};
     public Producto(String nombre, Date fecha_vencimiento, String codigo_barra, int stock, int id_proveedor, float precio) {
