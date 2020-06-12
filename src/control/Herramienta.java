@@ -29,6 +29,11 @@ public class Herramienta {
         return dateSql;
     }
     
+    public Date cambiarFechaDateSql(java.util.Date fecha) throws ParseException{
+        java.sql.Date dateSql=new java.sql.Date(fecha.getTime());
+        return dateSql;
+    };
+    
      public void validarSoloNumeros(JTextField campo){
         campo.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e){

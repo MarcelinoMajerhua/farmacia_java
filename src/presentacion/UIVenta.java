@@ -24,12 +24,13 @@ public class UIVenta extends javax.swing.JPanel {
     List<Venta> productosParaVender =new ArrayList();;//llista de los productos que se encuentran en la tabla para vender
     Venta v=new Venta();
     Usuario usuario= new Usuario(); //contiene los datos del usuario logueado
-    DAOProducto daoP = new DAOProductoImpl(); 
     DefaultTableModel modelo = new DefaultTableModel(); //modelo de la tabla producto
     DefaultTableModel modeloVenta = new DefaultTableModel();//modelo de la tabla de venta
     List<Producto> lista;//lista de los productos 
     Herramienta herramienta = new Herramienta();
     List<Venta> venta;
+    List<Producto> listaInicialProducto;
+    DAOProducto daoP = new DAOProductoImpl();
     int filaSelecionadaProducto; //contiene la fila selecionada de la tabla producto
     int filaSelecionadaVEnta; //contiene la fila selecionada de la tabla venta
     public UIVenta() {
@@ -46,8 +47,9 @@ public class UIVenta extends javax.swing.JPanel {
         jlPrecioTotal.setText(String.valueOf(calcularPrecioTotal()));
     }
     
-    public UIVenta(Usuario u){
+    public UIVenta(Usuario u ,List<Producto> listaProducto){
         usuario.setId_modificar(u.getId_modificar());
+        this.listaInicialProducto=listaProducto;
         initComponents();
         llenarLista();
         generarModelo();
@@ -92,7 +94,7 @@ public class UIVenta extends javax.swing.JPanel {
     }//no
     private List<Producto> llenarLista(){
         try {
-           this.lista=daoP.listar();
+           this.lista=listaInicialProducto;
         } catch (Exception e) {
             
             System.err.println("Error en consultar");

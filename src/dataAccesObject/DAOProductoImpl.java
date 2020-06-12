@@ -21,7 +21,7 @@ public class DAOProductoImpl extends Conexion implements DAOProducto{
 "        tipo_producto=?\n" +
 "        where id_producto= ?;";
     private final String DELETE ="delete from producto where id_producto=?";
-    private final String SELECTALL="select*from producto limit 30";
+    private final String SELECTALL="select*from producto";
     private final String SELECTONE="select*from producto where id_producto = ?";
     
     

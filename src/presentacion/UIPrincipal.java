@@ -2,26 +2,32 @@
 package presentacion;
 
 import control.CambiaPanel;
+import dataAccesObject.DAOProductoImpl;
+import dataAccesObject.DAOProveedorImpl;
+import datos.Producto;
+import datos.Proveedor;
 import datos.Usuario;
+import interfaces.DAOProducto;
+import interfaces.DAOProveedor;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class UIPrincipal extends javax.swing.JFrame {
-    private String nombreUsuario="No nombre";
-    private int idUsuario=0;
-    private boolean categoria=false;
     int xx,yy;
     private String tituloTabla="Mary Pharmacy";
-    public UIPrincipal() {
+    private List<Producto> listaProducto = new ArrayList();
+    private List<Proveedor> listaProveedor = new ArrayList();
+    DAOProducto daoP = new DAOProductoImpl();
+    DAOProveedor daoPr = new DAOProveedorImpl();
+    Usuario u = new Usuario();
+        
+    public UIPrincipal(){
         initComponents();
-        this.setLocationRelativeTo(null);
-        cambiarTitulo("Mary Pharmacy");
-        this.setTitle(getTitulo());
-        new CambiaPanel(jpPrincipal,new UIInicio());
     }
-    public UIPrincipal(Usuario us){
-        this.nombreUsuario=us.getNombre();
-        this.idUsuario=us.getId_modificar();
-        this.categoria=us.getCategoria();
+    public UIPrincipal(Usuario us) throws Exception{
+        listaProducto = daoP.listar();
+        listaProveedor = daoPr.listar();
         initComponents();
         this.setLocationRelativeTo(null);
         cambiarTitulo("Mary Pharmacy");
@@ -30,6 +36,10 @@ public class UIPrincipal extends javax.swing.JFrame {
         if(!us.getCategoria()){//seleccionar que ventanas se va mostrar
             ocultarBoton();
         }
+        u.setNombre(us.getNombre());
+        u.setCategoria(us.getCategoria());
+        u.setId_modificar(us.getId_modificar());
+        
     }
     
     
@@ -272,13 +282,10 @@ public class UIPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbVentaMouseClicked
-        Usuario u = new Usuario();
-        u.setNombre(nombreUsuario);
-        u.setCategoria(categoria);
-        u.setId_modificar(idUsuario);
-        cambiarTitulo("Venta "+this.nombreUsuario);
+        
+        cambiarTitulo("Venta "+u.getNombre());
         this.setTitle(getTitulo());
-        new CambiaPanel(jpPrincipal, new UIVenta(u));
+        new CambiaPanel(jpPrincipal, new UIVenta(u,listaProducto));
 
     }//GEN-LAST:event_jbVentaMouseClicked
 
@@ -314,25 +321,25 @@ public class UIPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jpToolBarMouseDragged
 
     private void jbProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbProductoMouseClicked
-        cambiarTitulo("Producto "+this.nombreUsuario);
+        cambiarTitulo("Producto "+u.getNombre());
         this.setTitle(getTitulo());
-        new CambiaPanel(jpPrincipal, new UIProducto());
+        new CambiaPanel(jpPrincipal, new UIProducto(u,listaProducto,listaProveedor));
     }//GEN-LAST:event_jbProductoMouseClicked
 
     private void jbReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbReporteMouseClicked
-        cambiarTitulo("Reporte "+this.nombreUsuario);
+        cambiarTitulo("Reporte "+u.getNombre());
         this.setTitle(getTitulo());
         new CambiaPanel(jpPrincipal, new UIReporte());
     }//GEN-LAST:event_jbReporteMouseClicked
 
     private void jbPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbPersonalMouseClicked
-        cambiarTitulo("Personal "+this.nombreUsuario);
+        cambiarTitulo("Personal "+u.getNombre());
         this.setTitle(getTitulo());
         new CambiaPanel(jpPrincipal, new UIPersonal());
     }//GEN-LAST:event_jbPersonalMouseClicked
 
     private void jbInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbInicioMouseClicked
-         cambiarTitulo("Inicio "+this.nombreUsuario);
+        cambiarTitulo("Inicio "+u.getNombre());
         this.setTitle(getTitulo());
         new CambiaPanel(jpPrincipal, new UIInicio());
     }//GEN-LAST:event_jbInicioMouseClicked

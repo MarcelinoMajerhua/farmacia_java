@@ -7,6 +7,8 @@ package presentacion;
 
 import com.sun.awt.AWTUtilities;
 import dataAccesObject.DaoLogin;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class UILogin extends javax.swing.JFrame {
@@ -17,7 +19,7 @@ public class UILogin extends javax.swing.JFrame {
     }
     DaoLogin metodosLogin = new DaoLogin();
     
-    public void validar(){
+    public void validar() throws Exception{
         if(metodosLogin.validarIngreso().getLogueado()&metodosLogin.validarIngreso().getActivo()){
             this.dispose();
             //poner para un mensaje personalizado 
@@ -144,7 +146,11 @@ public class UILogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        validar();
+        try {
+            validar();
+        } catch (Exception ex) {
+            Logger.getLogger(UILogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
