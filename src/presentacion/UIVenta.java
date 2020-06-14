@@ -9,8 +9,6 @@ import datos.Usuario;
 import datos.Venta;
 import interfaces.DAOProducto;
 import interfaces.DAOVenta;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -578,9 +576,10 @@ public class UIVenta extends javax.swing.JPanel {
 
     private void jbAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbAgregarMouseClicked
         
-        float precio = (float) jtProducto.getValueAt(filaSelecionadaProducto, 5);//recuperando el precio de la tabla producto
-        int cantidadActualTP = (int) jtProducto.getValueAt(filaSelecionadaProducto, 3);//recuperando la cantidad actual en la tabla de producto
-        if (jtCantidadProducto.getText().length()>0) {//verificando que no este vacio el campo
+        
+        if (jtCantidadProducto.getText().length()>0&&jtProducto.getSelectedRow()!=-1) {//verificando que no este vacio el campo
+            float precio = (float) jtProducto.getValueAt(filaSelecionadaProducto, 5);//recuperando el precio de la tabla producto
+            int cantidadActualTP = (int) jtProducto.getValueAt(filaSelecionadaProducto, 3);//recuperando la cantidad actual en la tabla de producto
             int cantidadJTP =Integer.parseInt(jtCantidadProducto.getText());
             if(cantidadJTP>0){
                 if(evaluarExitenciaTV((int)jtProducto.getValueAt(filaSelecionadaProducto, 0))==-2){//no existe en la tbla de venta 
@@ -609,6 +608,7 @@ public class UIVenta extends javax.swing.JPanel {
                 
             }
         }
+        System.out.println("seleccione un elemento");
         limpiarCampo();
         jtBuscar.setText(null);
         llenarTabla(lista);

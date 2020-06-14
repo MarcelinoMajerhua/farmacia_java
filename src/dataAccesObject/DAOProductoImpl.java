@@ -23,8 +23,8 @@ public class DAOProductoImpl extends Conexion implements DAOProducto{
     private final String DELETE ="delete from producto where id_producto=?";
     private final String SELECTALL="select*from producto";
     private final String SELECTONE="select*from producto where id_producto = ?";
-    
-    
+    private final String EXISTENCE = "call evaluarExistenciaProducto(?,?)";
+     private final String ADD ="update producto set stock=stock+? where id_producto=?";
     @Override
     public void registrar(Producto pr) throws Exception {
         try {
@@ -145,7 +145,7 @@ public class DAOProductoImpl extends Conexion implements DAOProducto{
     @Override
     public List<Producto> buscarProducto(String pr) throws Exception {
         List <Producto> lista;
-        String SEARCHONE ="select*from producto where nombre_producto LIKE '%"+pr+"%' or fecha_vencimiento LIKE '%"+pr+"%' or precio LIKE '%"+pr+"%' or tipo_producto LIKE '%"+pr+"%' limit 20";
+        String SEARCHONE ="select*from producto where nombre_producto LIKE '%"+pr+"%' or fecha_vencimiento LIKE '%"+pr+"%' or precio LIKE '%"+pr+"%' or tipo_producto LIKE '%"+pr+"%' or codigo_barra LIKE '%"+pr+"%' limit 20";
         try {
             this.conectar();
             lista = new ArrayList();
@@ -169,6 +169,42 @@ public class DAOProductoImpl extends Conexion implements DAOProducto{
             this.cerrar();
         }
         return lista;
+    }
+
+    @Override
+    public int evaluarExistencia(String nombreP, String codigoB) throws Exception {
+        int cont=0;
+        try {
+            this.conectar();
+            PreparedStatement st = this.conexion.prepareStatement(EXISTENCE);
+            st.setString(1, nombreP);
+            st.setString(2, codigoB);
+            st.executeUpdate();
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                cont++;
+            };
+        } catch (Exception e) {
+            throw e;
+        }finally{
+            this.cerrar();
+        }
+        return  cont;
+    }
+
+    @Override
+    public void agregarStock(int cantidad, int id) throws Exception {
+        try {
+            this.conectar();
+            PreparedStatement st = this.conexion.prepareStatement(ADD);
+            st.setInt(1, cantidad);
+            st.setInt(2, id);
+            st.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }finally{
+            this.cerrar();
+        }
     }
     
 }
