@@ -1,12 +1,20 @@
 
 package control;
 
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 
 
@@ -91,10 +99,52 @@ public class Herramienta {
     }
     public boolean esDiferente(String original,String nuevo){
         boolean resp = false;
-        if(!original.replaceAll("\\s","").equals(nuevo.replaceAll("\\s",""))){
+        if(!original.replaceAll("\\s","").equals(nuevo.replaceAll("\\s",""))){//son diferentes 
             resp = true;
         }
         return resp;
     };
+    
+    public void fitrarBusqueda(JTextField campo, JTable tabla){
+        TableRowSorter<TableModel> rowSorter= new TableRowSorter<>(tabla.getModel());
+        tabla.setRowSorter(rowSorter);
+        campo.getDocument().addDocumentListener(
+            new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if (campo.getText().trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + campo.getText()));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if (campo.getText().trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + campo.getText()));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if (campo.getText().trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + campo.getText()));
+                }
+            }
+            
+            }
+        );
+        
+        
+    };
+    
+    public void focus(JTextField campo){
+        campo.requestFocus();
+    }
 
 }

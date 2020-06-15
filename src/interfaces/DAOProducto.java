@@ -14,4 +14,6 @@ public interface DAOProducto {
    public List <Producto> buscarProducto(String pr) throws Exception;
    public int evaluarExistencia(String nombreP,String codigoB) throws  Exception;
    public void agregarStock(int cantidad, int id) throws Exception;
+   public boolean evaluarExistenciaNombre(String nombre) throws Exception;
+   public boolean evaluarExistenciaCB(String codigoB) throws Exception;
 }

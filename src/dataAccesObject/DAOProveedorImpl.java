@@ -46,31 +46,28 @@ public class DAOProveedorImpl extends Conexion implements DAOProveedor{
     }
 
     @Override
-    public List<Proveedor> listarUno(int id) throws Exception {
-        List<Proveedor> lista;
+    public Proveedor listarUno(int id) throws Exception {
+        Proveedor pv =new Proveedor();
         try {
             this.conectar();
-            lista = new ArrayList();
             PreparedStatement st = this.conexion.prepareStatement(SELECT);
             st.setString(1, "unitario");
             st.setInt(2, id);
             st.executeUpdate();
             ResultSet rs = st.executeQuery();
             while(rs.next()){
-                Proveedor pv = new Proveedor();
                 pv.setIdProveedor(rs.getInt("id_proveedor"));
                 pv.setDetalleProveedor(rs.getString("detalle"));
                 pv.setDireccionProveedor(rs.getString("direccion_proveedor"));
                 pv.setNombreProveedor(rs.getString("nombre_proveedor"));
                 pv.setTelefonoProveedor(rs.getString("telefono_proveedor"));
-                lista.add(pv);
             };
         } catch (Exception e) {
             throw e;
         }finally{
             this.cerrar();
         }
-        return lista;
+        return pv;
     }
 
     @Override
@@ -180,14 +177,10 @@ public class DAOProveedorImpl extends Conexion implements DAOProveedor{
 
     @Override
     public void actualizar(Proveedor pr) throws Exception {
-        String UPDATE ="update proveedor set nombre_proveedor ='"+pr.getNombreProveedor()+"', direccion_proveedor='"+pr.getDireccionProveedor()+"',\n" +
-"        telefono_proveedor='"+pr.getTelefonoProveedor()+"',detalle='"+pr.getDetalleProveedor()+"'\n" +
-"        where id_proveedor="+pr.getIdProveedor(); 
+        String UPDATE ="update proveedor set nombre_proveedor ='"+pr.getNombreProveedor()+"', direccion_proveedor='"+pr.getDireccionProveedor()+"',telefono_proveedor='"+pr.getTelefonoProveedor()+"',detalle='"+pr.getDetalleProveedor()+"' where id_proveedor="+pr.getIdProveedor(); 
          try {
+             System.out.println(UPDATE);
             this.conectar();
-            /*"update proveedor set nombre_proveedor = ?, direccion_proveedor=?,\n" +
-"        telefono_proveedor=?,detalle=?\n" +
-"        where id_proveedor=?;" */
             PreparedStatement st = this.conexion.prepareStatement(UPDATE);
             st.executeUpdate();
          

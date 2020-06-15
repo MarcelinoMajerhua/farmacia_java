@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DAOProveedor {
    public List <Proveedor> listar()throws Exception;
-   public List <Proveedor> listarUno(int id) throws Exception;
+   public Proveedor listarUno(int id) throws Exception;
    public void insertar(Proveedor pr) throws Exception;
    public void actualizar(Proveedor pr) throws  Exception;
    public List <Proveedor> buscarProveedor(String dato) throws Exception;

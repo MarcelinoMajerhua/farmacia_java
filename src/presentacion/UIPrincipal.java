@@ -11,6 +11,8 @@ import interfaces.DAOProducto;
 import interfaces.DAOProveedor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class UIPrincipal extends javax.swing.JFrame {
@@ -323,7 +325,11 @@ public class UIPrincipal extends javax.swing.JFrame {
     private void jbProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbProductoMouseClicked
         cambiarTitulo("Producto "+u.getNombre());
         this.setTitle(getTitulo());
-        new CambiaPanel(jpPrincipal, new UIProducto(u,listaProducto,listaProveedor));
+        try {
+            new CambiaPanel(jpPrincipal, new UIProducto(u));
+        } catch (Exception ex) {
+            Logger.getLogger(UIPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbProductoMouseClicked
 
     private void jbReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbReporteMouseClicked

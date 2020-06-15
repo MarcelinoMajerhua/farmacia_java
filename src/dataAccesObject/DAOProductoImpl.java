@@ -12,19 +12,13 @@ import java.util.List;
 public class DAOProductoImpl extends Conexion implements DAOProducto{
     private final String INSERT = "insert into producto (nombre_producto,fecha_vencimiento,codigo_barra,stock,id_proveedor,precio,tipo_producto)\n" +
 "        values (?,?,?,?,?,?,?)";
-    private final String UPDATE ="update producto set nombre_producto=?,\n" +
-"        fecha_vencimiento=?,\n" +
-"        codigo_barra=?,\n" +
-"        stock=?,\n" +
-"        id_proveedor=?,\n" +
-"        precio=?\n" +
-"        tipo_producto=?\n" +
-"        where id_producto= ?;";
     private final String DELETE ="delete from producto where id_producto=?";
     private final String SELECTALL="select*from producto";
     private final String SELECTONE="select*from producto where id_producto = ?";
     private final String EXISTENCE = "call evaluarExistenciaProducto(?,?)";
-     private final String ADD ="update producto set stock=stock+? where id_producto=?";
+    private final String ADD ="update producto set stock=stock+? where id_producto=?";
+    private final String SHEARNAME = "select*from producto where nombre_producto=?";
+    private final String SHEARCB = "select*from producto where codigo_barra=?";
     @Override
     public void registrar(Producto pr) throws Exception {
         try {
@@ -48,17 +42,11 @@ public class DAOProductoImpl extends Conexion implements DAOProducto{
 
     @Override
     public void modificar(Producto pr) throws Exception {
+        String UPDATE="update producto set nombre_producto='"+pr.getNombre()+"',fecha_vencimiento='"+pr.getFecha_vencimiento()+"',codigo_barra='"+pr.getCodigo_barra()+"',id_proveedor='"+pr.getId_proveedor()+"',precio='"+pr.getPrecio()+"',tipo_producto='"+pr.getTipo_producto()+"' where id_producto="+pr.getCodigo();
+        System.out.println(UPDATE);
         try {
             this.conectar();
             PreparedStatement st = this.conexion.prepareStatement(UPDATE);
-            st.setString(1, pr.getNombre());
-            st.setDate(2, pr.getFecha_vencimiento());
-            st.setString(3, pr.getCodigo_barra());
-            st.setInt(4, pr.getStock());
-            st.setInt(5, pr.getId_proveedor());
-            st.setFloat(6, pr.getPrecio());
-            st.setString(7, pr.getTipo_producto());
-            st.setInt(8, pr.getCodigo());
             st.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -66,6 +54,7 @@ public class DAOProductoImpl extends Conexion implements DAOProducto{
             this.cerrar();
         }
     }
+    
 
     @Override
     public void eliminar(Producto pr) throws Exception {
@@ -205,6 +194,44 @@ public class DAOProductoImpl extends Conexion implements DAOProducto{
         }finally{
             this.cerrar();
         }
+    }
+
+    @Override
+    public boolean evaluarExistenciaNombre(String nombre) throws Exception {
+        boolean res = false;
+        try {
+            this.conectar();
+            PreparedStatement st = this.conexion.prepareStatement(SHEARNAME);
+            st.setString(1, nombre);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                res = true;
+            };
+        } catch (Exception e) {
+            throw e;
+        }finally{
+            this.cerrar();
+        }
+        return res;
+}
+
+    @Override
+    public boolean evaluarExistenciaCB(String codigoB) throws Exception {
+        boolean res = false;
+        try {
+            this.conectar();
+            PreparedStatement st = this.conexion.prepareStatement(SHEARCB);
+            st.setString(1, codigoB);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                res = true;
+            };
+        } catch (Exception e) {
+            throw e;
+        }finally{
+            this.cerrar();
+        }
+        return res;
     }
     
 }

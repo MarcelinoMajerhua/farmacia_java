@@ -175,6 +175,9 @@ public class UIProveedor extends javax.swing.JFrame {
                     };
                 }
                 if(!existenciaProveedor){
+                    proveedor.setDireccionProveedor(txtDireccionProvedor.getText());
+                    proveedor.setNombreProveedor(txtNombreProveedor.getText());
+                    proveedor.setTelefonoProveedor(txtTelefonoProveedor.getText());
                     proveedor.setDetalleProveedor(txtDetalle.getText());
                     daoPr.actualizar(proveedor);
                     System.out.println("Actualizacion correacta");
