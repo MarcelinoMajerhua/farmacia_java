@@ -19,7 +19,6 @@ public class UIPrincipal extends javax.swing.JFrame {
     int xx,yy;
     private String tituloTabla="Mary Pharmacy";
     private List<Producto> listaProducto = new ArrayList();
-    private List<Proveedor> listaProveedor = new ArrayList();
     DAOProducto daoP = new DAOProductoImpl();
     DAOProveedor daoPr = new DAOProveedorImpl();
     Usuario u = new Usuario();
@@ -29,7 +28,6 @@ public class UIPrincipal extends javax.swing.JFrame {
     }
     public UIPrincipal(Usuario us) throws Exception{
         listaProducto = daoP.listar();
-        listaProveedor = daoPr.listar();
         initComponents();
         this.setLocationRelativeTo(null);
         cambiarTitulo("Mary Pharmacy");
@@ -335,7 +333,11 @@ public class UIPrincipal extends javax.swing.JFrame {
     private void jbReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbReporteMouseClicked
         cambiarTitulo("Reporte "+u.getNombre());
         this.setTitle(getTitulo());
-        new CambiaPanel(jpPrincipal, new UIReporte());
+        try {
+            new CambiaPanel(jpPrincipal, new UIReporte());
+        } catch (Exception ex) {
+            Logger.getLogger(UIPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbReporteMouseClicked
 
     private void jbPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbPersonalMouseClicked

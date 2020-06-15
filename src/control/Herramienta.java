@@ -1,8 +1,6 @@
 
 package control;
 
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Date;
@@ -15,9 +13,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
-
-
 
 public class Herramienta {
     
@@ -146,5 +141,6 @@ public class Herramienta {
     public void focus(JTextField campo){
         campo.requestFocus();
     }
+ 
 
 }

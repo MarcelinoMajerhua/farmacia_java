@@ -41,7 +41,6 @@ public class UIVenta extends javax.swing.JPanel {
         seleccionarCeldaProducto();
         seleccionarCeldaVenta();
         herramienta.validarSoloNumeros(jtCantidadProducto);
-        jbQuitar.setVisible(false);
         jlPrecioTotal.setText(String.valueOf(calcularPrecioTotal()));
     }
     
@@ -59,6 +58,7 @@ public class UIVenta extends javax.swing.JPanel {
         herramienta.validarSoloNumeros(jtCantidadProducto);
         jbQuitar.setVisible(false);
         jlPrecioTotal.setText(String.valueOf(calcularPrecioTotal()));
+        ocultarBotones();//aculatando botones 
     };
     private void seleccionarCeldaProducto(){
         
@@ -69,7 +69,13 @@ public class UIVenta extends javax.swing.JPanel {
                 if(jtProducto.getSelectedRow()!=-1){
                     filaSelecionadaProducto = jtProducto.getSelectedRow();//actualizando la fila seleccionada de TProducto
                     jlNombreProducto.setText(jtProducto.getValueAt(filaSelecionadaProducto, 1).toString());
-       
+                    jbAgregar.setVisible(true);
+                    jtCantidadProducto.setVisible(true);
+                    herramienta.focus(jtCantidadProducto);
+                }else{
+                    jlNombreProducto.setText("No hay producto seleccionado");
+                    jbAgregar.setVisible(false);
+                    jtCantidadProducto.setVisible(false);
                 };
             }
         }
@@ -85,6 +91,8 @@ public class UIVenta extends javax.swing.JPanel {
                     filaSelecionadaVEnta = jtVenta.getSelectedRow();
                     jbQuitar.setVisible(true);
                     //v.setFechaVenta(h.fechaSql());     
+                }else{
+                    jbQuitar.setVisible(false);
                 };
             }
         }
@@ -127,7 +135,6 @@ public class UIVenta extends javax.swing.JPanel {
         return modeloVenta;
     }//si
     private void llenarTabla(List<Producto> lista){
-        
         modelo.setRowCount(0);
         for(Producto p:lista){
             Object[] fila={
@@ -180,6 +187,13 @@ public class UIVenta extends javax.swing.JPanel {
         };
         return precio_total;
     }
+    private void ocultarBotones(){
+        jbAgregar.setVisible(false);
+        jbVender.setVisible(false);
+        jbCancelar.setVisible(false);
+        jbQuitar.setVisible(false);
+        jtCantidadProducto.setVisible(false);
+    };
     /*
     private int buscarIdProducto(int id){
         
@@ -290,6 +304,11 @@ public class UIVenta extends javax.swing.JPanel {
         jtBuscar.setForeground(new java.awt.Color(153, 153, 153));
         jtBuscar.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(255, 51, 51)));
         jtBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jtBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtBuscarFocusGained(evt);
+            }
+        });
         jtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jtBuscarKeyReleased(evt);
@@ -564,26 +583,18 @@ public class UIVenta extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBuscarKeyReleased
-
-            try {
-                llenarTabla(daoP.buscarProducto(jtBuscar.getText()));
-            } catch (Exception e) {
-                System.err.println("Error en consultar");
-            }
- 
         
     }//GEN-LAST:event_jtBuscarKeyReleased
 
     private void jbAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbAgregarMouseClicked
-        
-        
-        if (jtCantidadProducto.getText().length()>0&&jtProducto.getSelectedRow()!=-1) {//verificando que no este vacio el campo
+
+        if (jtCantidadProducto.getText().length()>0) {//verificando que no este vacio el campo
             float precio = (float) jtProducto.getValueAt(filaSelecionadaProducto, 5);//recuperando el precio de la tabla producto
             int cantidadActualTP = (int) jtProducto.getValueAt(filaSelecionadaProducto, 3);//recuperando la cantidad actual en la tabla de producto
             int cantidadJTP =Integer.parseInt(jtCantidadProducto.getText());
             if(cantidadJTP>0){
                 if(evaluarExitenciaTV((int)jtProducto.getValueAt(filaSelecionadaProducto, 0))==-2){//no existe en la tbla de venta 
-                    if(cantidadJTP<(int)jtProducto.getValueAt(filaSelecionadaProducto, 3)){//evaluando que la cantidad quqe se desea vender no exceda a la cantoidad existente
+                    if(cantidadJTP<=(int)jtProducto.getValueAt(filaSelecionadaProducto, 3)){//evaluando que la cantidad quqe se desea vender no exceda a la cantoidad existente
                         //agregando nuevo elemento a la tabla vetan
                         v.setIdProducto((int) jtProducto.getValueAt(filaSelecionadaProducto,0));
                         v.setCandidadVenta(cantidadJTP);
@@ -598,17 +609,19 @@ public class UIVenta extends javax.swing.JPanel {
                     int numeroFilaVenta = evaluarExitenciaTV((int)jtProducto.getValueAt(filaSelecionadaProducto, 0));//recuperando el numero de fila de la tabla venta con el id del productp
                     int cantidadActualTV=(int)jtVenta.getValueAt(numeroFilaVenta,2);//recuperando la cantidad de la tabla venta
                     int cantidadNuevo = cantidadActualTV+Integer.parseInt(jtCantidadProducto.getText());//cantidad de la tabla venta sumado a la nueva cantidad ingresada 
-                    if(cantidadNuevo<cantidadActualTP){//evaluando si la cantidad que deseamos vender no exede a cantidad existente
+                    if(cantidadNuevo<=cantidadActualTP){//evaluando si la cantidad que deseamos vender no exede a cantidad existente
                         //se tiene que modificar los valores de las celdas de la tabla venta
                         jtVenta.setValueAt(cantidadNuevo, numeroFilaVenta, 2);
                         jtVenta.setValueAt(cantidadNuevo*precio, numeroFilaVenta, 3);
                     };
                     
-                }
+                };
+                
                 
             }
         }
-        System.out.println("seleccione un elemento");
+        jbVender.setVisible(true);
+        jbCancelar.setVisible(true);
         limpiarCampo();
         jtBuscar.setText(null);
         llenarTabla(lista);
@@ -631,6 +644,7 @@ public class UIVenta extends javax.swing.JPanel {
     private void jbCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbCancelarMouseClicked
         eleminarTablaVenta(modeloVenta);
         jlPrecioTotal.setText(String.valueOf(calcularPrecioTotal()));
+        ocultarBotones();
     }//GEN-LAST:event_jbCancelarMouseClicked
 
     private void jbVenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbVenderMouseClicked
@@ -651,11 +665,19 @@ public class UIVenta extends javax.swing.JPanel {
                 }
             }
             eleminarTablaVenta(modeloVenta);
-            lista=llenarLista();
-            llenarTabla(lista);
+            try {
+                llenarTabla(daoP.listar());
+            } catch (Exception ex) {
+                Logger.getLogger(UIVenta.class.getName()).log(Level.SEVERE, null, ex);
+            }
             jlPrecioTotal.setText(String.valueOf(calcularPrecioTotal()));
+            ocultarBotones();
         };
     }//GEN-LAST:event_jbVenderMouseClicked
+
+    private void jtBuscarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtBuscarFocusGained
+        herramienta.fitrarBusqueda(jtBuscar, jtProducto);
+    }//GEN-LAST:event_jtBuscarFocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

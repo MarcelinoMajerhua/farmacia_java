@@ -3,14 +3,16 @@ package dataAccesObject;
 
 import datos.Venta;
 import interfaces.DAOVenta;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class DAOVentaImpl extends Conexion implements DAOVenta{
-    private final String SELECTALL="";
     private final String INSERT="call vender(?,?,?,?)";
+    private final String SHOWSELL="call mostrarVenta(?,?,?)";
     @Override
     public void registrar(Venta v) throws Exception {
         try {
@@ -30,9 +32,32 @@ public class DAOVentaImpl extends Conexion implements DAOVenta{
     }
 
     @Override
-    public List<Venta> listar() throws Exception {
-        List<Venta> list = new ArrayList();
-        return list;
+    public List<Object> listarVenPersonal(String accion,int id,Date fecha) throws Exception {
+        List<Object> lista;
+        try {
+            this.conectar();
+            PreparedStatement st= this.conexion.prepareStatement(SHOWSELL);
+            st.setString(1, accion);
+            st.setInt(2, id);
+            st.setDate(3, fecha);
+            lista = new ArrayList();
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Object[] item={
+                    rs.getString("Nombre vendedor"),
+                    rs.getString("Nombre producto"),
+                    rs.getInt("Cantidad vendida"),
+                    rs.getFloat("Precio total venta"),
+                    rs.getDate("fecha"),
+                };
+                lista.add(item);
+            }
+        } catch (Exception e) {
+            throw e;
+        }finally{
+            this.cerrar();
+        }
+        return lista;
     }
     
 }
