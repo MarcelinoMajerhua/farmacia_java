@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 
 
 public class UIPrincipal extends javax.swing.JFrame {
-    int xx,yy;
     private String tituloTabla="Mary Pharmacy";
     private List<Producto> listaProducto = new ArrayList();
     DAOProducto daoP = new DAOProductoImpl();
@@ -155,6 +154,12 @@ public class UIPrincipal extends javax.swing.JFrame {
         });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/logoFarmacia.png"))); // NOI18N
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpMenuLayout = new javax.swing.GroupLayout(jpMenu);
         jpMenu.setLayout(jpMenuLayout);
@@ -213,7 +218,7 @@ public class UIPrincipal extends javax.swing.JFrame {
                 .addComponent(jbPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addContainerGap(251, Short.MAX_VALUE))
         );
 
         jpToolBar.setBackground(new java.awt.Color(255, 255, 255));
@@ -290,8 +295,7 @@ public class UIPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jbVentaMouseClicked
 
     private void jpPrincipalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpPrincipalMousePressed
-        xx=evt.getX();
-        yy=evt.getY();
+
     }//GEN-LAST:event_jpPrincipalMousePressed
 
     private void jpPrincipalMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpPrincipalMouseDragged
@@ -309,15 +313,11 @@ public class UIPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_formMouseDragged
 
     private void jpToolBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpToolBarMousePressed
-        xx=evt.getX();
-        yy=evt.getY();
+
     }//GEN-LAST:event_jpToolBarMousePressed
 
     private void jpToolBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpToolBarMouseDragged
-        int x= evt.getXOnScreen();
-        int y= evt.getYOnScreen();
 
-        this.setLocation(x-xx, y-yy);
     }//GEN-LAST:event_jpToolBarMouseDragged
 
     private void jbProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbProductoMouseClicked
@@ -359,6 +359,16 @@ public class UIPrincipal extends javax.swing.JFrame {
             Logger.getLogger(UIPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbInicioMouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        cambiarTitulo("Inicio "+u.getNombre());
+        this.setTitle(getTitulo());
+        try {
+            new CambiaPanel(jpPrincipal, new UIInicio());
+        } catch (Exception ex) {
+            Logger.getLogger(UIPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments

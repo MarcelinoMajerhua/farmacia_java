@@ -34,6 +34,7 @@ public class UIPersonal extends javax.swing.JPanel {
         seleccionarCeldaUsuario(); 
         generarModelo();
         llenarTabla(listaUsuario);
+        h.validarSoloNumeros(txtTelefono);
     }
 
     private void seleccionarCeldaUsuario() {
@@ -143,11 +144,11 @@ public class UIPersonal extends javax.swing.JPanel {
          if(!esVacio){//evaluar si el campo esta vacio 
             if(daoU.evaluarExistenciaEmail(txtEmail.getText())){//evaluando si el email esta en uso 
                 exiteUsuario=true;
-                System.err.println("El email esta es uso");
+                h.mensaje("El email ya está es uso");
             }; 
             if(daoU.evaluarExistenciaNombre(txtNombre.getText())){
                 exiteUsuario=true;
-                System.err.println("El no nombre ya esta en uso");
+                h.mensaje("El nombre ya está en uso");
             };
             if(!exiteUsuario){
                 Usuario us = new Usuario();
@@ -168,10 +169,10 @@ public class UIPersonal extends javax.swing.JPanel {
                 daoU.registrar(us);
                 llenarTabla(daoU.listar());
                 limpiarFormulario();
-                System.err.println("Se registro correctamente");
+                h.mensaje("El usuario se registró correctamente");
             };
          }else{//mensaje de que algun campoe sta vacio 
-             System.err.println("Llene todos los campos");
+             h.mensaje("Llene todos los campos");
          };
          
      };
@@ -182,13 +183,13 @@ public class UIPersonal extends javax.swing.JPanel {
             if(h.esDiferente((String) jtUsuario.getValueAt(filaSelecionadaUsurio, 2), txtEmail.getText())){
                 if(daoU.evaluarExistenciaEmail(txtEmail.getText())){//evaluando si el email esta en uso 
                     exiteUsuario=true;
-                    System.err.println("El email esta es uso");
+                    h.mensaje("El email ya está es uso");
                 };
             }; 
             if(h.esDiferente((String) jtUsuario.getValueAt(filaSelecionadaUsurio, 1), txtNombre.getText())){
                 if(daoU.evaluarExistenciaNombre(txtNombre.getText())){
                     exiteUsuario=true;
-                    System.err.println("El no nombre ya esta en uso");
+                    h.mensaje("El nombre ya está en uso");
                 };
             };
             if(!exiteUsuario){
@@ -210,10 +211,10 @@ public class UIPersonal extends javax.swing.JPanel {
                 daoU.modificar(us);
                 llenarTabla(daoU.listar());
                 limpiarFormulario();
-                System.err.println("Se Editó correctamente");
+                h.mensaje("El usuario fue editado correctamete");
             };
          }else{//mensaje de que algun campoe sta vacio 
-             System.err.println("Llene todos los campos");
+             h.mensaje("Llene todos los campos");
          };
      
      };

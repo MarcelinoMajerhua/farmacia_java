@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -141,6 +142,9 @@ public class Herramienta {
     public void focus(JTextField campo){
         campo.requestFocus();
     }
- 
+    
+    public void mensaje(String mensaje){
+        JOptionPane.showMessageDialog(null, mensaje);
+    };
 
 }

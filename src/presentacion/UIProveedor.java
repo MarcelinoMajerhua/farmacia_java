@@ -28,6 +28,7 @@ public class UIProveedor extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Proveedor " + usuario.getNombre());
+        herramienta.validarSoloNumeros(txtTelefonoProveedor);
         //habilitando boton para agregar
         btnAgregar.setVisible(true);
         btnEditar.setVisible(false);
@@ -164,14 +165,14 @@ public class UIProveedor extends javax.swing.JFrame {
             try {
                 if(herramienta.esDiferente(proveedor.getNombreProveedor(),txtNombreProveedor.getText())){//evaluando i el nombre a cmbiado
                     if(daoPr.evaluarExistenciaNombre(txtNombreProveedor.getText())){
-                        System.err.println("El usuario ya esta registrado");
                         existenciaProveedor=true;//existe el usuario
+                        herramienta.mensaje("El Nombre ya está registrado");
                     };
                 }
                 if(herramienta.esDiferente(proveedor.getTelefonoProveedor(), txtTelefonoProveedor.getText())){
                     if(daoPr.evaluarExistenciaTelefono(txtTelefonoProveedor.getText())){
-                        System.err.println("El usuario ya esta registrado");
                         existenciaProveedor=true;//el telefono usuario
+                        herramienta.mensaje("El teléfono ya está asignado a otro usuario");
                     };
                 }
                 if(!existenciaProveedor){
@@ -180,7 +181,7 @@ public class UIProveedor extends javax.swing.JFrame {
                     proveedor.setTelefonoProveedor(txtTelefonoProveedor.getText());
                     proveedor.setDetalleProveedor(txtDetalle.getText());
                     daoPr.actualizar(proveedor);
-                    System.out.println("Actualizacion correacta");
+                    herramienta.mensaje("Se actualizó correctamente el proveedor");
                     this.setVisible(false);
                 }
             } catch (Exception ex) {
@@ -189,7 +190,7 @@ public class UIProveedor extends javax.swing.JFrame {
             
         
         }else{
-            System.out.println("llene todos los campos");
+            herramienta.mensaje("llene todos los campos");
         };
     }//GEN-LAST:event_btnEditarMouseClicked
 
@@ -206,12 +207,13 @@ public class UIProveedor extends javax.swing.JFrame {
         if(!herramienta.esVacio(txtNombreProveedor.getText())&&!herramienta.esVacio(txtTelefonoProveedor.getText())&&!herramienta.esVacio(txtDireccionProvedor.getText())&&!herramienta.esVacio(txtDetalle.getText())){
             try {
                 if(daoPr.evaluarExistenciaNombre(txtNombreProveedor.getText())){
-                    System.err.println("El usuario ya esta registrado");
                     existenciaProveedor=true;//existe el usuario
+                    herramienta.mensaje("El Nombre ya está registrado");
+                    
                  };
                 if(daoPr.evaluarExistenciaTelefono(txtTelefonoProveedor.getText())){
-                    System.err.println("El Telefono ya está regitrado");
                     existenciaProveedor=true;//el telefono usuario
+                    herramienta.mensaje("El teléfono ya está asignado a otro usuario");
                 };
                 if(!existenciaProveedor){
                     proveedor.setDetalleProveedor(txtDetalle.getText());
@@ -219,8 +221,9 @@ public class UIProveedor extends javax.swing.JFrame {
                     proveedor.setNombreProveedor(txtNombreProveedor.getText());
                     proveedor.setTelefonoProveedor(txtTelefonoProveedor.getText());
                     daoPr.insertar(proveedor);
-                    System.out.println("Se agrego correctamente");
+                    herramienta.mensaje("Se agregó correctamente el proveedor");
                     this.setVisible(false);
+                    
                 }
             } catch (Exception ex) {
                 Logger.getLogger(UIProveedor.class.getName()).log(Level.SEVERE, null, ex);
@@ -228,7 +231,7 @@ public class UIProveedor extends javax.swing.JFrame {
             
         
         }else{
-            System.out.println("llene todos los campos");
+            herramienta.mensaje("llene todos los campos");
         };
     }//GEN-LAST:event_btnAgregarMouseClicked
     

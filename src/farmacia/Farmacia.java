@@ -11,17 +11,6 @@ public class Farmacia {
 
     
     public static void main(String[] args) {
-        /*
-        Usuario us = new Usuario();
-        try {
-            DAOUsuario dao = new DAOUsuarioImpl();
-            for(Usuario u: dao.listar()){
-                System.out.println(u.getEmail());
-            }
-             
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }*/
         
         presentacion.UILogin i;
         i=new presentacion.UILogin();

@@ -81,7 +81,9 @@ public class UIVenta extends javax.swing.JPanel {
                     jlNombreProducto.setText(jtProducto.getValueAt(filaSelecionadaProducto, 1).toString());
                     jbAgregar.setVisible(true);
                     jtCantidadProducto.setVisible(true);
+                    jtCantidadProducto.setText(null);
                     herramienta.focus(jtCantidadProducto);
+                    
                 }else{
                     jlNombreProducto.setText("No hay producto seleccionado");
                     jbAgregar.setVisible(false);
