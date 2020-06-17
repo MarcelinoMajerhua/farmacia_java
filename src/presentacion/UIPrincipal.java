@@ -343,13 +343,21 @@ public class UIPrincipal extends javax.swing.JFrame {
     private void jbPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbPersonalMouseClicked
         cambiarTitulo("Personal "+u.getNombre());
         this.setTitle(getTitulo());
-        new CambiaPanel(jpPrincipal, new UIPersonal());
+        try {
+            new CambiaPanel(jpPrincipal, new UIPersonal());
+        } catch (Exception ex) {
+            Logger.getLogger(UIPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbPersonalMouseClicked
 
     private void jbInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbInicioMouseClicked
         cambiarTitulo("Inicio "+u.getNombre());
         this.setTitle(getTitulo());
-        new CambiaPanel(jpPrincipal, new UIInicio());
+        try {
+            new CambiaPanel(jpPrincipal, new UIInicio());
+        } catch (Exception ex) {
+            Logger.getLogger(UIPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbInicioMouseClicked
 
     /**

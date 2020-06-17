@@ -14,10 +14,9 @@ public class DAOUsuarioImpl extends Conexion implements DAOUsuario{
             "values(?,?,?,?,?,?)";
     private final String UPDATE ="update usuario set email=?,contraseña=?,telefono_usuario=?,nombre=?,categoria=?, activo=?"+
             " where id_usuario=?";
-    
-    private final String DELETE = "delete from usuario where id_usuario=?;";
     private final String SELECTALL ="select id_usuario,email,telefono_usuario,nombre,categoria,activo from usuario";
-    private final String SELECTONE = "select id_usuario,email,telefono_usuario,nombre,categoria,activo from usuario where id_usuario=?";
+    private final String SEARCHNAME ="select \"email\" from usuario where upper(replace(nombre,' ','')) =upper(replace(?,' ',''));";
+    private final String SEARCHEMAIL = "select \"email\" from usuario where upper(replace(email,' ','')) =upper(replace(?,' ',''));";
     @Override
     public void registrar(Usuario usu) throws Exception {
         try {
@@ -60,21 +59,6 @@ public class DAOUsuarioImpl extends Conexion implements DAOUsuario{
     }
 
     @Override
-    public void eliminar(Usuario usu) throws Exception {
-        try {
-            this.conectar();
-            PreparedStatement st= this.conexion.prepareStatement(DELETE);
-            st.setInt(1, usu.getId_modificar());
-            st.executeUpdate();
-            
-        } catch (Exception e) {
-            throw e;
-        }finally{
-            this.cerrar();
-        }
-    }
-
-    @Override
     public List<Usuario> listar() throws Exception {
         List<Usuario> lista;
         
@@ -101,32 +85,45 @@ public class DAOUsuarioImpl extends Conexion implements DAOUsuario{
         }
         return lista;
     }
+
     @Override
-    public List<Usuario> mostrarUno(Usuario usu) throws Exception {
-         List<Usuario> lista;
+    public boolean evaluarExistenciaEmail(String email) throws Exception {
+        boolean existencia = false;
+        
         try {
             this.conectar();
-            PreparedStatement st= this.conexion.prepareStatement(SELECTONE);
-            st.setInt(1, usu.getId_modificar());
-            lista = new ArrayList();
+            PreparedStatement st= this.conexion.prepareStatement(SEARCHEMAIL);
+            st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                //select id_usuario,email,telefono_usuario,nombre,categoria,activo from usuario
-            
-                Usuario usuario = new Usuario();
-                usuario.setId_modificar(rs.getInt("id_usuario"));
-                usuario.setEmail(rs.getString("email"));
-                usuario.setTelefono(rs.getString("telefono_usuario"));
-                usuario.setNombre(rs.getString("nombre"));
-                usuario.setCategoria(rs.getBoolean("categoria"));
-                usuario.setActivo(rs.getBoolean("activo"));
-                lista.add(usuario);
+               existencia = true;
             }
         } catch (Exception e) {
             throw e;
         }finally{
             this.cerrar();
         }
-        return lista;
-    } 
+        return existencia;
+    }
+
+    @Override
+    public boolean evaluarExistenciaNombre(String nombre) throws Exception {
+        boolean existencia = false;
+        
+        try {
+            this.conectar();
+            PreparedStatement st= this.conexion.prepareStatement(SEARCHNAME);
+            st.setString(1, nombre);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+               existencia = true;
+            }
+        } catch (Exception e) {
+            throw e;
+        }finally{
+            this.cerrar();
+        }
+        return existencia;
+    }
+   
 }

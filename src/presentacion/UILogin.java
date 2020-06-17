@@ -122,6 +122,11 @@ public class UILogin extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
+            }
+        });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 90, 40));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/img/icons8_Multiply_32px.png"))); // NOI18N
@@ -168,6 +173,10 @@ public class UILogin extends javax.swing.JFrame {
         
         this.setLocation(x-xx, y-yy);
     }//GEN-LAST:event_jPanel1MouseDragged
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1KeyPressed
 
     /**
      * @param args the command line arguments

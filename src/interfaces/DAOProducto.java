@@ -2,6 +2,7 @@
 package interfaces;
 
 import datos.Producto;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -16,4 +17,10 @@ public interface DAOProducto {
    public void agregarStock(int cantidad, int id) throws Exception;
    public boolean evaluarExistenciaNombre(String nombre) throws Exception;
    public boolean evaluarExistenciaCB(String codigoB) throws Exception;
+   public int recuperarCodigo(Producto pr) throws Exception;
+   public List <Producto> listarproducto()throws Exception;
+   public List <Producto> listarProductoVencer()throws Exception;
+   public List <Producto> listarProductoVencido()throws Exception;
+   public List <Producto> listarProductoBajoStock()throws Exception;
+   public void acctualizarFechaVencimiento(Date fecha, int id) throws Exception;
 }

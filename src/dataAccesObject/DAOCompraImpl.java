@@ -10,10 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOCompraImpl extends Conexion implements DAOCompra{
-    private final String INSERT = "call comprar(?,?,?,?)";
+    private final String INSERT = "call comprar(?,?,?,?,?)";
     private final String SHOWSELL="call mostrarCompra(?,?,?)";
     public void registrar(Compra c) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            this.conectar();
+            PreparedStatement st= this.conexion.prepareStatement(INSERT);
+            st.setInt(1, c.getCamtidadComprada());
+            st.setFloat(2, c.getPrecioTotalCompra());
+            st.setInt(3, c.getIdProducto());
+            st.setInt(4, c.getIdUsuario());
+            st.setDate(5, c.getFechaCompra());
+            st.executeUpdate();
+            
+        } catch (Exception e) {
+            throw e;
+        }finally{
+            this.cerrar();
+        }
     }
 
     @Override

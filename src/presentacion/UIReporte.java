@@ -20,7 +20,12 @@ public class UIReporte extends javax.swing.JPanel {
     DAOUsuario daoU = new DAOUsuarioImpl();
     DAOVenta daoV = new DAOVentaImpl();
     DAOCompra daoC = new DAOCompraImpl();
-    DefaultTableModel modeloUsuario = new DefaultTableModel();
+    DefaultTableModel modeloUsuario = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; //To change body of generated methods, choose Tools | Templates.
+        }
+    };
     Map<String, Integer> idUsuario =  new HashMap<String, Integer>();
     List<Object> listaInicial =new ArrayList();
     Herramienta herramienta = new Herramienta();
@@ -30,6 +35,7 @@ public class UIReporte extends javax.swing.JPanel {
         generarModeloProveedor();
         llenarComboBoxUsuario(daoU.listar());
         llenarTabla(listaInicial);
+        txtMontoTotal.setText(Float.toString(calcularMontonTotal()));
     }
 
     private DefaultTableModel generarModeloProveedor() {
@@ -51,6 +57,15 @@ public class UIReporte extends javax.swing.JPanel {
     }
 
     ;//si
+     private float calcularMontonTotal(){
+        float precio_total=0;
+        if(jtUsuario.getRowCount()>0){
+            for(int i=0;i<jtUsuario.getRowCount();i++){
+                precio_total=precio_total+(float)jtUsuario.getValueAt(i, 3);
+            };
+        };
+        return precio_total;
+    }
     
     private void llenarComboBoxUsuario(List<Usuario> lista) {// agregar esto a marce
         for (int i = 0; i < lista.size(); i++) {
@@ -149,6 +164,9 @@ public class UIReporte extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtUsuario = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txtMontoTotal = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jComboUsuario = new javax.swing.JComboBox<>();
@@ -212,20 +230,51 @@ public class UIReporte extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jtUsuario);
 
+        jLabel5.setFont(new java.awt.Font("Yu Gothic", 1, 12)); // NOI18N
+        jLabel5.setText("Monto total:");
+
+        txtMontoTotal.setFont(new java.awt.Font("Yu Gothic", 1, 12)); // NOI18N
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 713, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -245,7 +294,7 @@ public class UIReporte extends javax.swing.JPanel {
         jLabel2.setText("Seleccione usuario");
 
         jComboTipoOperacion.setFont(new java.awt.Font("Yu Gothic", 1, 12)); // NOI18N
-        jComboTipoOperacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Venta", "Compra", " " }));
+        jComboTipoOperacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Venta", "Compra" }));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Yu Gothic", 1, 12)); // NOI18N
@@ -271,6 +320,11 @@ public class UIReporte extends javax.swing.JPanel {
         txtBuscarProducto.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtBuscarProductoFocusGained(evt);
+            }
+        });
+        txtBuscarProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarProductoKeyReleased(evt);
             }
         });
 
@@ -384,6 +438,7 @@ public class UIReporte extends javax.swing.JPanel {
                Logger.getLogger(UIReporte.class.getName()).log(Level.SEVERE, null, ex);
            }
        };
+       txtMontoTotal.setText(Float.toString(calcularMontonTotal()));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -393,6 +448,10 @@ public class UIReporte extends javax.swing.JPanel {
     private void txtBuscarProductoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarProductoFocusGained
         herramienta.fitrarBusqueda(txtBuscarProducto, jtUsuario);
     }//GEN-LAST:event_txtBuscarProductoFocusGained
+
+    private void txtBuscarProductoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProductoKeyReleased
+        txtMontoTotal.setText(Float.toString(calcularMontonTotal()));
+    }//GEN-LAST:event_txtBuscarProductoKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -404,14 +463,17 @@ public class UIReporte extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel jpVenta;
     private javax.swing.JTable jtUsuario;
     private javax.swing.JTextField txtBuscarProducto;
+    private javax.swing.JLabel txtMontoTotal;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,16 +5,6 @@
  */
 package farmacia;
 
-import com.sun.awt.AWTUtilities;
-import control.Herramienta;
-import dataAccesObject.DAOProductoImpl;
-import dataAccesObject.DAOUsuarioImpl;
-import datos.Producto;
-import datos.Usuario;
-import interfaces.DAOProducto;
-import interfaces.DAOUsuario;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 
 public class Farmacia {

@@ -1,30 +1,24 @@
 
 package dataAccesObject;
 
+import control.Config;
+import control.Encripty;
 import datos.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.List;
 import javax.swing.JOptionPane;
 import presentacion.UILogin;
 
 public class DaoLogin extends Conexion{
     private final String CONSULTA ="select nombre,categoria,id_usuario,activo from usuario where (email=?)and(contraseña=?)";
-
+    Encripty config = new Encripty();
+    Config configuracion = new Config();
     public Usuario validarIngreso(){
         
-        int resultado =0;
-        String nombre;
-        boolean categoria;
-        int id_usuario;
-        boolean activo;
         Usuario us = new Usuario();
         String usuario = UILogin.txtUsuario.getText();
-        String clave = UILogin.txtPassword.getText().trim();
-        
+        String clave = config.ecnode(configuracion.getSecretKey(), UILogin.txtPassword.getText());
         try {
-            
             this.conectar();
             PreparedStatement st= this.conexion.prepareStatement(CONSULTA);
             st.setString(1, usuario);
