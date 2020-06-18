@@ -5,7 +5,6 @@ import control.CambiaPanel;
 import dataAccesObject.DAOProductoImpl;
 import dataAccesObject.DAOProveedorImpl;
 import datos.Producto;
-import datos.Proveedor;
 import datos.Usuario;
 import interfaces.DAOProducto;
 import interfaces.DAOProveedor;

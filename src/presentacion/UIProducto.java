@@ -187,15 +187,11 @@ public class UIProducto extends javax.swing.JPanel {
     ;
     private Proveedor recuperarDatosTablaProveedor() {
         int filaSelecionadaProveedor = jtProveedor.getSelectedRow();
-        if (filaSelecionadaProveedor != -1) {
-            pr.setDetalleProveedor((String) jtProveedor.getValueAt(filaSelecionadaProveedor, 4));
-            pr.setDireccionProveedor((String) jtProveedor.getValueAt(filaSelecionadaProveedor, 3));
-            pr.setIdProveedor((int) jtProveedor.getValueAt(filaSelecionadaProveedor, 0));
-            pr.setNombreProveedor((String) jtProveedor.getValueAt(filaSelecionadaProveedor, 1));
-            pr.setTelefonoProveedor((String) jtProveedor.getValueAt(filaSelecionadaProveedor, 2));
-        } else {
-            System.out.println("Seleccione un proveedor para editar");
-        };
+        pr.setDetalleProveedor((String) jtProveedor.getValueAt(filaSelecionadaProveedor, 4));
+        pr.setDireccionProveedor((String) jtProveedor.getValueAt(filaSelecionadaProveedor, 3));
+        pr.setIdProveedor((int) jtProveedor.getValueAt(filaSelecionadaProveedor, 0));
+        pr.setNombreProveedor((String) jtProveedor.getValueAt(filaSelecionadaProveedor, 1));
+        pr.setTelefonoProveedor((String) jtProveedor.getValueAt(filaSelecionadaProveedor, 2));
         return pr;
     }
 
@@ -336,12 +332,19 @@ public class UIProducto extends javax.swing.JPanel {
             productoEditar.setId_proveedor((int) jtProveedor.getValueAt(filaSeleccionadaProveedor, 0));
             if (herramienta.esDiferente(String.valueOf(productoEditar.getCodigo_barra()), txtCodigobarra.getText())) {
                 exitenciaProducto = daoP.evaluarExistenciaCB(txtCodigobarra.getText());
+
             };
             if (herramienta.esDiferente(String.valueOf(productoEditar.getNombre()), txtNombreProducto.getText())) {
                 exitenciaProducto = daoP.evaluarExistenciaNombre(txtNombreProducto.getText());
             }
             ;
             if (!exitenciaProducto) {
+                productoEditar.setCodigo_barra(txtCodigobarra.getText());
+                productoEditar.setNombre(txtNombreProducto.getText());
+                productoEditar.setFecha_vencimiento( herramienta.cambiarFechaDateSql(btnFechaV.getDate()));
+                productoEditar.setId_proveedor((int) jtProveedor.getValueAt(filaSelecionadaProveedor, 0));
+                productoEditar.setPrecio(Float.parseFloat(txtPracioProducto.getText()));
+                productoEditar.setTipo_producto(txtTipoProducto.getText());
                 daoP.modificar(productoEditar);
                 herramienta.mensaje("Se ha editado correctamente el producto");
                 borrarFormulario();
@@ -1117,7 +1120,6 @@ public class UIProducto extends javax.swing.JPanel {
 
         //buscar en la base de datos para ver si es unico
         if (!celdaVacia && btnFechaV.getDate() != null) {//lo mismo 
-            System.err.println(!celdaVacia);
             if (filaSeleccionadaProveedor != -1) {//lo mismo
                 if (btnNuevoProducto.getText().equals("Agregar")) {//para agregar
                     if (!herramienta.esVacio(txtPrecioCompra.getText()) && !herramienta.esVacio(txtCantidad.getText())) {
@@ -1154,13 +1156,9 @@ public class UIProducto extends javax.swing.JPanel {
     }//GEN-LAST:event_jtBuscarProveedorKeyReleased
 
     private void btnEditarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarProveedorMouseClicked
-        filaSeleccionadaProveedor = jtProveedor.getSelectedRow();
-        if (filaSeleccionadaProveedor != -1) {
-            UIProveedor j = new UIProveedor(usuario, recuperarDatosTablaProveedor());
-            j.setVisible(true);
-        } else {
-            System.err.println("Seleccione un proveedor para editar");
-        };
+        UIProveedor j = new UIProveedor(usuario, recuperarDatosTablaProveedor());
+        j.setVisible(true);
+
     }//GEN-LAST:event_btnEditarProveedorMouseClicked
 
     private void txtCodigobarraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigobarraKeyReleased
@@ -1283,12 +1281,16 @@ public class UIProducto extends javax.swing.JPanel {
         //fin
         productoEditar.setCodigo_barra(String.valueOf(jtProducto.getValueAt(filaSelecionadaProducto, 4)));
         txtCodigobarra.setText(String.valueOf(jtProducto.getValueAt(filaSelecionadaProducto, 4)));
+        
         productoEditar.setNombre(String.valueOf(jtProducto.getValueAt(filaSelecionadaProducto, 1)));
         txtNombreProducto.setText(String.valueOf(jtProducto.getValueAt(filaSelecionadaProducto, 1)));
+        
         productoEditar.setPrecio((float) jtProducto.getValueAt(filaSelecionadaProducto, 6));
         txtPracioProducto.setText(String.valueOf(jtProducto.getValueAt(filaSelecionadaProducto, 6)));
+        
         productoEditar.setTipo_producto(String.valueOf(jtProducto.getValueAt(filaSelecionadaProducto, 7)));
         txtTipoProducto.setText(String.valueOf(jtProducto.getValueAt(filaSelecionadaProducto, 7)));
+        
         productoEditar.setFecha_vencimiento((java.sql.Date) jtProducto.getValueAt(filaSelecionadaProducto, 2));
         btnFechaV.setDate((Date) jtProducto.getValueAt(filaSelecionadaProducto, 2));
         //id del producto

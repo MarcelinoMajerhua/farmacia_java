@@ -1,4 +1,3 @@
-
 package presentacion;
 
 import control.Herramienta;
@@ -18,17 +17,19 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class UIVenta extends javax.swing.JPanel {
+
     DAOVenta vender = new DAOVentaImpl();
-    List<Venta> productosParaVender =new ArrayList();;//llista de los productos que se encuentran en la tabla para vender
-    Venta v=new Venta();
-    Usuario usuario= new Usuario(); //contiene los datos del usuario logueado
-    DefaultTableModel modelo = new DefaultTableModel(){
+    List<Venta> productosParaVender = new ArrayList();
+    ;//llista de los productos que se encuentran en la tabla para vender
+    Venta v = new Venta();
+    Usuario usuario = new Usuario(); //contiene los datos del usuario logueado
+    DefaultTableModel modelo = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false; //To change body of generated methods, choose Tools | Templates.
         }
     }; //modelo de la tabla producto
-    DefaultTableModel modeloVenta = new DefaultTableModel(){
+    DefaultTableModel modeloVenta = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false; //To change body of generated methods, choose Tools | Templates.
@@ -41,6 +42,7 @@ public class UIVenta extends javax.swing.JPanel {
     DAOProducto daoP = new DAOProductoImpl();
     int filaSelecionadaProducto; //contiene la fila selecionada de la tabla producto
     int filaSelecionadaVEnta; //contiene la fila selecionada de la tabla venta
+
     public UIVenta() {
         initComponents();
         llenarLista();
@@ -53,10 +55,10 @@ public class UIVenta extends javax.swing.JPanel {
         herramienta.validarSoloNumeros(jtCantidadProducto);
         jlPrecioTotal.setText(String.valueOf(calcularPrecioTotal()));
     }
-    
-    public UIVenta(Usuario u ,List<Producto> listaProducto){
+
+    public UIVenta(Usuario u, List<Producto> listaProducto) {
         usuario.setId_modificar(u.getId_modificar());
-        this.listaInicialProducto=listaProducto;
+        this.listaInicialProducto = listaProducto;
         initComponents();
         llenarLista();
         generarModelo();
@@ -69,22 +71,24 @@ public class UIVenta extends javax.swing.JPanel {
         jbQuitar.setVisible(false);
         jlPrecioTotal.setText(String.valueOf(calcularPrecioTotal()));
         ocultarBotones();//aculatando botones 
-    };
-    private void seleccionarCeldaProducto(){
-        
+    }
+
+    ;
+    private void seleccionarCeldaProducto() {
+
         jtProducto.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(jtProducto.getSelectedRow()!=-1){
+                if (jtProducto.getSelectedRow() != -1) {
                     filaSelecionadaProducto = jtProducto.getSelectedRow();//actualizando la fila seleccionada de TProducto
                     jlNombreProducto.setText(jtProducto.getValueAt(filaSelecionadaProducto, 1).toString());
                     jbAgregar.setVisible(true);
                     jtCantidadProducto.setVisible(true);
                     jtCantidadProducto.setText(null);
                     herramienta.focus(jtCantidadProducto);
-                    
-                }else{
+
+                } else {
                     jlNombreProducto.setText("No hay producto seleccionado");
                     jbAgregar.setVisible(false);
                     jtCantidadProducto.setVisible(false);
@@ -93,34 +97,37 @@ public class UIVenta extends javax.swing.JPanel {
         }
         );
     }//no
-    private void seleccionarCeldaVenta(){
-        
+
+    private void seleccionarCeldaVenta() {
+
         jtVenta.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(jtVenta.getSelectedRow()!=-1){
+                if (jtVenta.getSelectedRow() != -1) {
                     filaSelecionadaVEnta = jtVenta.getSelectedRow();
                     jbQuitar.setVisible(true);
                     //v.setFechaVenta(h.fechaSql());     
-                }else{
+                } else {
                     jbQuitar.setVisible(false);
                 };
             }
         }
         );
     }//no
-    private List<Producto> llenarLista(){
+
+    private List<Producto> llenarLista() {
         try {
-           this.lista=listaInicialProducto;
+            this.lista = listaInicialProducto;
         } catch (Exception e) {
-            
+
             System.err.println("Error en consultar");
         }
         return this.lista;
     }
-    private DefaultTableModel generarModelo(){
-        ArrayList<Object> nombreColumna =new ArrayList<Object>();
+
+    private DefaultTableModel generarModelo() {
+        ArrayList<Object> nombreColumna = new ArrayList<Object>();
         nombreColumna.add("Id producto");
         nombreColumna.add("Nombre Producto");
         nombreColumna.add("Vencimiento");
@@ -128,28 +135,30 @@ public class UIVenta extends javax.swing.JPanel {
         nombreColumna.add("Id proveedor");
         nombreColumna.add("Precio");
         nombreColumna.add("Tipo");
-        for(Object columna:nombreColumna){
+        for (Object columna : nombreColumna) {
             modelo.addColumn(columna);
         }
         this.jtProducto.setModel(modelo);
         return modelo;
     }//si
-    private DefaultTableModel generarModeloVenta(){
-        ArrayList<Object> nombreColumna =new ArrayList<Object>();
+
+    private DefaultTableModel generarModeloVenta() {
+        ArrayList<Object> nombreColumna = new ArrayList<Object>();
         nombreColumna.add("Id");
         nombreColumna.add("Nombre");
         nombreColumna.add("Cantidad");
         nombreColumna.add("Precio Venta");
-        for(Object columna:nombreColumna){
+        for (Object columna : nombreColumna) {
             modeloVenta.addColumn(columna);
         }
         this.jtVenta.setModel(modeloVenta);
         return modeloVenta;
     }//si
-    private void llenarTabla(List<Producto> lista){
+
+    private void llenarTabla(List<Producto> lista) {
         modelo.setRowCount(0);
-        for(Producto p:lista){
-            Object[] fila={
+        for (Producto p : lista) {
+            Object[] fila = {
                 p.getCodigo(),
                 p.getNombre(),
                 p.getFecha_vencimiento(),
@@ -160,52 +169,61 @@ public class UIVenta extends javax.swing.JPanel {
             };
             modelo.addRow(fila);
         }
-    
-    }
-    private void llenarTablaVenta(List<Venta> lista){
-        for(Venta vent:lista){
-            Object[] fila={
-                vent.getIdProducto(),
-                jtProducto.getValueAt(filaSelecionadaProducto,1),
-                vent.getCandidadVenta(),
-                vent.getPrecioTotalVenta(),
 
-            };
+    }
+
+    private void llenarTablaVenta(List<Venta> lista) {
+        for (Venta vent : lista) {
+            Object[] fila = {
+                vent.getIdProducto(),
+                jtProducto.getValueAt(filaSelecionadaProducto, 1),
+                vent.getCandidadVenta(),
+                vent.getPrecioTotalVenta(),};
             modeloVenta.addRow(fila);
         }
-    };
-    private int evaluarExitenciaTV(int id){//devuelve el nuero de fila de la tabla venta si no exiiste devuel -2
-        int resp =-2;
+    }
+
+    ;
+    private int evaluarExitenciaTV(int id) {//devuelve el nuero de fila de la tabla venta si no exiiste devuel -2
+        int resp = -2;
         for (int i = 0; i < jtVenta.getRowCount(); i++) {
-            if((int)jtVenta.getValueAt(i,0)==id){
-                resp=i;
+            if ((int) jtVenta.getValueAt(i, 0) == id) {
+                resp = i;
                 break;
             }
         }
         return resp;
     }
-    private void limpiarCampo(){
+
+    private void limpiarCampo() {
         jtCantidadProducto.setText(null);
-    };
-    private void eleminarTablaVenta(DefaultTableModel modelo){
-       modelo.setRowCount(0);
-    };
-    private float calcularPrecioTotal(){
-        float precio_total=0;
-        if(jtVenta.getRowCount()>0){
-            for(int i=0;i<jtVenta.getRowCount();i++){
-                precio_total=precio_total+(float)jtVenta.getValueAt(i, 3);
+    }
+
+    ;
+    private void eleminarTablaVenta(DefaultTableModel modelo) {
+        modelo.setRowCount(0);
+    }
+
+    ;
+    private float calcularPrecioTotal() {
+        float precio_total = 0;
+        if (jtVenta.getRowCount() > 0) {
+            for (int i = 0; i < jtVenta.getRowCount(); i++) {
+                precio_total = precio_total + (float) jtVenta.getValueAt(i, 3);
             };
         };
         return precio_total;
     }
-    private void ocultarBotones(){
+
+    private void ocultarBotones() {
         jbAgregar.setVisible(false);
         jbVender.setVisible(false);
         jbCancelar.setVisible(false);
         jbQuitar.setVisible(false);
         jtCantidadProducto.setVisible(false);
-    };
+    }
+
+    ;
     /*
     private int buscarIdProducto(int id){
         
@@ -595,58 +613,60 @@ public class UIVenta extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBuscarKeyReleased
-        
+
     }//GEN-LAST:event_jtBuscarKeyReleased
 
     private void jbAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbAgregarMouseClicked
 
-        if (jtCantidadProducto.getText().length()>0) {//verificando que no este vacio el campo
+        if (jtCantidadProducto.getText().length() > 0) {//verificando que no este vacio el campo
             float precio = (float) jtProducto.getValueAt(filaSelecionadaProducto, 5);//recuperando el precio de la tabla producto
             int cantidadActualTP = (int) jtProducto.getValueAt(filaSelecionadaProducto, 3);//recuperando la cantidad actual en la tabla de producto
-            int cantidadJTP =Integer.parseInt(jtCantidadProducto.getText());
-            if(cantidadJTP>0){
-                if(evaluarExitenciaTV((int)jtProducto.getValueAt(filaSelecionadaProducto, 0))==-2){//no existe en la tbla de venta 
-                    if(cantidadJTP<=(int)jtProducto.getValueAt(filaSelecionadaProducto, 3)){//evaluando que la cantidad quqe se desea vender no exceda a la cantoidad existente
+            int cantidadJTP = Integer.parseInt(jtCantidadProducto.getText());
+            if (cantidadJTP > 0) {
+                if (evaluarExitenciaTV((int) jtProducto.getValueAt(filaSelecionadaProducto, 0)) == -2) {//no existe en la tbla de venta 
+                    if (cantidadJTP <= (int) jtProducto.getValueAt(filaSelecionadaProducto, 3)) {//evaluando que la cantidad quqe se desea vender no exceda a la cantoidad existente
                         //agregando nuevo elemento a la tabla vetan
-                        v.setIdProducto((int) jtProducto.getValueAt(filaSelecionadaProducto,0));
+                        v.setIdProducto((int) jtProducto.getValueAt(filaSelecionadaProducto, 0));
                         v.setCandidadVenta(cantidadJTP);
-                        v.setPrecioTotalVenta(cantidadJTP*precio);
+                        v.setPrecioTotalVenta(cantidadJTP * precio);
                         //se llena la listade productosParaVender para llenar la tabla venta
                         productosParaVender.add(v);
                         llenarTablaVenta(productosParaVender);//llenando la tabla venta
                         productosParaVender.clear();//eliminado de la lista
                     }//poner mensaje
-                    
-                }else{//si el producto ya esta agregado en la tabla de venta
-                    int numeroFilaVenta = evaluarExitenciaTV((int)jtProducto.getValueAt(filaSelecionadaProducto, 0));//recuperando el numero de fila de la tabla venta con el id del productp
-                    int cantidadActualTV=(int)jtVenta.getValueAt(numeroFilaVenta,2);//recuperando la cantidad de la tabla venta
-                    int cantidadNuevo = cantidadActualTV+Integer.parseInt(jtCantidadProducto.getText());//cantidad de la tabla venta sumado a la nueva cantidad ingresada 
-                    if(cantidadNuevo<=cantidadActualTP){//evaluando si la cantidad que deseamos vender no exede a cantidad existente
+
+                } else {//si el producto ya esta agregado en la tabla de venta
+                    int numeroFilaVenta = evaluarExitenciaTV((int) jtProducto.getValueAt(filaSelecionadaProducto, 0));//recuperando el numero de fila de la tabla venta con el id del productp
+                    int cantidadActualTV = (int) jtVenta.getValueAt(numeroFilaVenta, 2);//recuperando la cantidad de la tabla venta
+                    int cantidadNuevo = cantidadActualTV + Integer.parseInt(jtCantidadProducto.getText());//cantidad de la tabla venta sumado a la nueva cantidad ingresada 
+                    if (cantidadNuevo <= cantidadActualTP) {//evaluando si la cantidad que deseamos vender no exede a cantidad existente
                         //se tiene que modificar los valores de las celdas de la tabla venta
                         jtVenta.setValueAt(cantidadNuevo, numeroFilaVenta, 2);
-                        jtVenta.setValueAt(cantidadNuevo*precio, numeroFilaVenta, 3);
+                        jtVenta.setValueAt(cantidadNuevo * precio, numeroFilaVenta, 3);
                     };
-                    
+
                 };
-                
-                
+
             }
-        }
-        jbVender.setVisible(true);
-        jbCancelar.setVisible(true);
-        limpiarCampo();
-        jtBuscar.setText(null);
-        llenarTabla(lista);
-        jlPrecioTotal.setText(String.valueOf(calcularPrecioTotal()));
-        
+            jbVender.setVisible(true);
+            jbCancelar.setVisible(true);
+            limpiarCampo();
+            jtBuscar.setText(null);
+            llenarTabla(lista);
+            jlPrecioTotal.setText(String.valueOf(calcularPrecioTotal()));
+        } else {
+            herramienta.mensaje("Ingrese la cantidad que desee vender");
+        };
+
+
     }//GEN-LAST:event_jbAgregarMouseClicked
 
     private void jbQuitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbQuitarMouseClicked
-        if(jtVenta.getRowCount()>0){
+        if (jtVenta.getRowCount() > 0) {
             modeloVenta.removeRow(filaSelecionadaVEnta);
         };
         jlPrecioTotal.setText(String.valueOf(calcularPrecioTotal()));
-        
+
     }//GEN-LAST:event_jbQuitarMouseClicked
 
     private void jbAgregarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbAgregarMouseEntered
@@ -660,9 +680,9 @@ public class UIVenta extends javax.swing.JPanel {
     }//GEN-LAST:event_jbCancelarMouseClicked
 
     private void jbVenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbVenderMouseClicked
-        if(jtVenta.getRowCount()>0){
-            
-            for(int i=0;i<jtVenta.getRowCount();i++){
+        if (jtVenta.getRowCount() > 0) {
+
+            for (int i = 0; i < jtVenta.getRowCount(); i++) {
                 Venta vent = new Venta();
                 vent.setCandidadVenta((int) jtVenta.getValueAt(i, 2));
                 vent.setIdProducto((int) jtVenta.getValueAt(i, 0));

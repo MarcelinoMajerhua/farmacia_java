@@ -130,7 +130,7 @@ public class UIPersonal extends javax.swing.JPanel {
          if(jtUsuario.getValueAt(fila, 4).equals("Administrador")){
              btnAdministrador.setSelected(true);
          }else{
-             btnAdministrador.setSelected(true);
+             btnAdministrador.setSelected(false);
          };
          
     

@@ -12,7 +12,7 @@ import java.util.List;
 public class DAOUsuarioImpl extends Conexion implements DAOUsuario{
     private final String INSERT = "insert into usuario(email,contraseña,telefono_usuario,nombre,categoria,activo)"+
             "values(?,?,?,?,?,?)";
-    private final String UPDATE ="update usuario set email=?,contraseña=?,telefono_usuario=?,nombre=?,categoria=?, activo=?"+
+    private final String UPDATE ="update usuario set email=?,telefono_usuario=?,nombre=?,categoria=?, activo=?"+
             " where id_usuario=?";
     private final String SELECTALL ="select id_usuario,email,telefono_usuario,nombre,categoria,activo from usuario";
     private final String SEARCHNAME ="select \"email\" from usuario where upper(replace(nombre,' ','')) =upper(replace(?,' ',''));";
@@ -43,12 +43,11 @@ public class DAOUsuarioImpl extends Conexion implements DAOUsuario{
             this.conectar();
             PreparedStatement st= this.conexion.prepareStatement(UPDATE);
             st.setString(1, usu.getEmail());
-            st.setString(2, usu.getContraseña());
-            st.setString(3, usu.getTelefono());
-            st.setString(4, usu.getNombre());
-            st.setBoolean(5, usu.getCategoria());
-            st.setBoolean(6, usu.getActivo());
-            st.setInt(7,usu.getId_modificar());
+            st.setString(2, usu.getTelefono());
+            st.setString(3, usu.getNombre());
+            st.setBoolean(4, usu.getCategoria());
+            st.setBoolean(5, usu.getActivo());
+            st.setInt(6,usu.getId_modificar());
             st.executeUpdate();
             
         } catch (Exception e) {
