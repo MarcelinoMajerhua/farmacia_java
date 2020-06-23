@@ -34,7 +34,7 @@ public class DAOProductoImpl extends Conexion implements DAOProducto{
             st.setString(1, pr.getNombre());
             st.setDate(2, pr.getFecha_vencimiento());
             st.setString(3, pr.getCodigo_barra());
-            st.setInt(4,pr.getStock());
+            st.setInt(4,0);
             st.setInt(5,pr.getId_proveedor());
             st.setFloat(6, pr.getPrecio());
             st.setString(7, pr.getTipo_producto());
